@@ -1,7 +1,40 @@
 ---
+import ExperienceItem from "./Experience/ExperienceItem.astro"
 
+const items = [
+    {
+        jobPosition: 'Software Developer',
+        company: 'Load Trail MX',
+        dateBegin: 'February 2024',
+        dateEnd: 'Current',
+        description: `
+            Creation of custom software solutions for the company and their
+            many departments and areas of the same.
+        `
+    },
+    {
+        jobPosition: 'Full Stack Developer',
+        company: 'Aplicaciones NG',
+        dateBegin: 'January 2023',
+        dateEnd: 'February 2024',
+        description: `
+            In charge of make the UI and backend for the projects. Maintaner of
+            legacy code bases (laravel 7, vue 2). Improve the general ui aspect
+            of the projects of the company
+        `
+    },
+]
 ---
 
-<section id="experience">
-    
+<section id="experience" class="mt-8 mb-6">
+    <h1 class="text-center text-3xl font-bold">Experience</h1>
+    <div class="mt-5">
+        {
+            items.map(e => (
+                <ExperienceItem jobPosition={e.jobPosition} company={e.company} dateBegin={e.dateBegin} dateEnd={e.dateEnd}>
+                    {e.description}
+                </ExperienceItem>
+            ))
+        }
+    </div>
 </section>
