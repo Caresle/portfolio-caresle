@@ -1,0 +1,41 @@
+---
+import ProjectItem from "./Projects/ProjectItem.astro"
+
+const projects = [
+    {
+        name: 'Microservice employees Odoo',
+        skills: ['Typescript', 'Nodejs', 'PostgreSQL'],
+        codeLink: 'https://github.com/Caresle/microservice-employees-odoo',
+        liveDemo: '',
+        image: 'https://placehold.co/1200x1200/000000/FFFFFF/png',
+        description: 'Odoo microservice for getting the employees of the ERP'
+    },
+    {
+        name: 'NextJS Trello Clone',
+        skills: ['NextJS', 'Tailwind', 'PostgreSQL'],
+        codeLink: 'https://github.com/Caresle/nextjs-trello-clone',
+        liveDemo: '',
+        image: 'https://placehold.co/1200x1200/000000/FFFFFF/png',
+        description: 'Clone of the Trello product'
+    },
+]
+---
+
+<section id="projects" class="mt-8 mb-6">
+    <h1 class="text-center text-3xl font-bold">Projects</h1>
+
+    <div class="mt-4">
+        {
+            projects.map(e => 
+                (<ProjectItem name={e.name}
+                    codeLink={e.codeLink}
+                    image={e.image}
+                    liveDemo={e.liveDemo}
+                    skills={e.skills}
+                >
+                    {e.description}
+                </ProjectItem>
+            ))
+        }
+    </div>
+</section>

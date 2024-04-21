@@ -1,0 +1,43 @@
+---
+import Badge from '../shared/Badge.astro';
+import ButtonLink from '../shared/ButtonLink.astro';
+interface Props {
+    name: string;
+    skills: Array<any>;
+    codeLink: string;
+    liveDemo: string;
+    image: string;
+}
+
+const {
+    name,
+    skills,
+    codeLink,
+    liveDemo,
+    image
+} = Astro.props
+---
+
+<div>
+    <!-- Image -->
+    <div>
+        <img loading="lazy" alt={name} src={image} class="rounded-lg"/>
+    </div>
+
+    <!-- Content -->
+    <div class="my-4">
+        <h2 class="text-2xl font-bold my-4">{name}</h2>
+        <div class="flex w-full gap-1 mb-4">
+            {
+                skills?.map(e => <Badge>{e}</Badge>)
+            }
+        </div>
+        <!-- Description -->
+        <slot />
+
+        <div class="my-2">
+            { codeLink?.length > 0 ? <ButtonLink href={codeLink}>Github</ButtonLink> : <></>}
+            { liveDemo?.length > 0 ? <ButtonLink href={liveDemo}>Live Demo</ButtonLink> : <></>}
+        </div>
+    </div>
+</div>
