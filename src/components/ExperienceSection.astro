@@ -28,7 +28,7 @@ const items = [
 
 <section id="experience" class="mt-8 mb-6">
     <h1 class="text-center text-3xl font-bold">Experience</h1>
-    <div class="mt-5">
+    <div class="mt-5 flex flex-col gap-2">
         {
             items.map(e => (
                 <ExperienceItem jobPosition={e.jobPosition} company={e.company} dateBegin={e.dateBegin} dateEnd={e.dateEnd}>

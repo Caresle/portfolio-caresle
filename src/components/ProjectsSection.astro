@@ -18,13 +18,21 @@ const projects = [
         image: 'https://placehold.co/1200x1200/000000/FFFFFF/png',
         description: 'Clone of the Trello product'
     },
+    {
+        name: 'NextJS Trello Clone',
+        skills: ['NextJS', 'Tailwind', 'PostgreSQL'],
+        codeLink: 'https://github.com/Caresle/nextjs-trello-clone',
+        liveDemo: '',
+        image: 'https://placehold.co/1200x1200/000000/FFFFFF/png',
+        description: 'Clone of the Trello product'
+    },
 ]
 ---
 
-<section id="projects" class="mt-8 mb-6">
+<section id="projects" class="mt-8 mb-6 max-w-5xl mx-auto flex flex-col gap-2">
     <h1 class="text-center text-3xl font-bold">Projects</h1>
 
-    <div class="mt-4">
+    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
         {
             projects.map(e => 
                 (<ProjectItem name={e.name}

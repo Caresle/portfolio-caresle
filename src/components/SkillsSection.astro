@@ -1,0 +1,95 @@
+---
+const items = [
+    {
+        name: 'Docker',
+        path: '/skills/docker-icon.svg',
+    },
+    {
+        name: 'GitHub',
+        path: '/skills/github-icon.svg',
+    },
+    {
+        name: 'Git',
+        path: '/skills/git-icon.svg',
+    },
+    {
+        name: 'JavaScript',
+        path: '/skills/javascript.svg',
+    },
+    {
+        name: 'Jest',
+        path: '/skills/jest.svg',
+    },
+    {
+        name: 'Laravel',
+        path: '/skills/laravel.svg',
+    },
+    {
+        name: 'MariaDB',
+        path: '/skills/mariadb-icon.svg',
+    },
+    {
+        name: 'Microsoft SQL Server',
+        path: '/skills/microsoft-sql-server-logo-svgrepo-com.svg',
+    },
+    {
+        name: 'MongoDB',
+        path: '/skills/mongodb-icon.svg',
+    },
+    {
+        name: 'Next.js',
+        path: '/skills/nextjs-icon.svg',
+    },
+    {
+        name: 'Node.js',
+        path: '/skills/nodejs-icon-alt.svg',
+    },
+    {
+        name: 'PostgreSQL',
+        path: '/skills/postgresql.svg',
+    },
+    {
+        name: 'React',
+        path: '/skills/react.svg',
+    },
+    {
+        name: 'Redis',
+        path: '/skills/redis.svg',
+    },
+    {
+        name: 'Supabase',
+        path: '/skills/supabase-icon.svg',
+    },
+    {
+        name: 'Tailwind CSS',
+        path: '/skills/tailwindcss-icon.svg',
+    },
+    {
+        name: 'TypeScript',
+        path: '/skills/typescript-icon.svg',
+    },
+    {
+        name: 'Vue',
+        path: '/skills/vue.svg',
+    },
+];
+
+---
+<section id="skills" class="mt-8 mb-6">
+    <h1 class="text-center font-bold text-3xl">Skills</h1>
+
+    <p class="my-4">
+        Here is a list of my skills
+    </p>
+
+    <div class="grid grid-cols-6 md:grid-cols-8 gap-2">
+        {
+            items.map(e => (
+                <div class="border p-2 shadow dark:border-slate-700 transition-all
+                    cursor-pointer hover:shadow-lg hover:dark:bg-slate-700 w-12 h-12 rounded-full">
+                        <img src={e.path} alt={e.name} class="aspect-auto w-full h-full" />
+                </div>
+            ))
+        }
+    </div>
+</section>

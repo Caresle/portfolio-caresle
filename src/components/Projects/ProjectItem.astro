@@ -18,14 +18,14 @@ const {
 } = Astro.props
 ---
 
-<div>
+<div class="border rounded-lg p-2 dark:border-slate-700 w-full mx-auto shadow-lg flex flex-col dark:bg-slate-900">
     <!-- Image -->
-    <div>
-        <img loading="lazy" alt={name} src={image} class="rounded-lg"/>
+    <div class="w-1/2 mx-auto">
+        <img loading="lazy" alt={name} src={image} class="rounded-lg aspect-auto"/>
     </div>
 
     <!-- Content -->
-    <div class="my-4">
+    <div class="my-4 flex flex-col flex-1">
         <h2 class="text-2xl font-bold my-4">{name}</h2>
         <div class="flex w-full gap-1 mb-4">
             {
@@ -33,9 +33,11 @@ const {
             }
         </div>
         <!-- Description -->
-        <slot />
+        <div class="flex-1 h-full">
+            <slot />
+        </div>
 
-        <div class="my-2">
+        <div class="my-2 flex items-center justify-center gap-2">
             { codeLink?.length > 0 ? <ButtonLink href={codeLink}>Github</ButtonLink> : <></>}
             { liveDemo?.length > 0 ? <ButtonLink href={liveDemo}>Live Demo</ButtonLink> : <></>}
         </div>

@@ -15,20 +15,22 @@ const {
 ---
 
 <div class="w-full flex gap-2">
-    <div class="min-h-fit border-gray-300 border-2 rounded-full">
-        <div class="absolute left-1 mt-2 size-3 bg-emerald-600 rounded-full"></div>
+    <div class="min-h-fit border-gray-300 dark:border-slate-800 border-2 rounded-full">
+        <div class="relative">
+            <div class="absolute -left-2 mt-2 size-3 bg-blue-600 rounded-full"></div>
+        </div>
     </div>
     <div class="flex flex-col p-1 mb-2 ml-2">
         <!-- Job info -->
         <div>
-            <div class="font-bold text-2xl text-emerald-600">{jobPosition}</div>
+            <div class="font-bold text-2xl text-blue-500">{jobPosition}</div>
             <div class="font-semibold text-lg space-y-2">{company}</div>
             <div class="text-gray-500">
                 {dateBegin} - {dateEnd}
             </div>
         </div>
         <!-- Experience description -->
-        <div class="w-full h-[1px] bg-gray-300"></div>
+        <div class="w-full h-[1px] bg-gray-300 dark:bg-slate-800 my-1"></div>
         <slot />
     </div>
 </div>

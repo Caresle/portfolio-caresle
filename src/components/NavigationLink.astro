@@ -7,4 +7,4 @@ interface Props {
 const {name, href} = Astro.props
 ---
 
-<a href={href} class="font-bold" aria-label={name}>{name}</a>
+<a href={href} class="font-bold text-sm hover:text-blue-500 transition-all hover:bg-slate-500/25 rounded-lg px-2 py-1" aria-label={name}>{name}</a>

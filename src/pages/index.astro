@@ -4,10 +4,16 @@ import HeaderTitle from "../components/HeaderTitle.astro"
 import ExperienceSection from "../components/ExperienceSection.astro"
 import ProjectsSection from "../components/ProjectsSection.astro"
 import AboutSection from "../components/AboutSection.astro"
+import SkillsSection from "../components/SkillsSection.astro"
 ---
 <MainLayout>
-	<HeaderTitle />
-	<ExperienceSection />
+	<div class="max-w-xl mx-auto">
+		<HeaderTitle />
+		<ExperienceSection />
+	</div>
 	<ProjectsSection />
-	<AboutSection />
+	<div class="max-w-xl mx-auto">
+		<SkillsSection />
+		<AboutSection />
+	</div>
 </MainLayout>
