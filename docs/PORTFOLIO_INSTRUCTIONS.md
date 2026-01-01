@@ -12,7 +12,7 @@ for the project.
 
 Here is the list of the most important dependencies of the project.
 
-- Astro
+- Reactjs
 - Tailwindcss
 
 ### 1.1 General information
@@ -59,6 +59,24 @@ For Sidebar see the descriptions in the next point [Sidebar specifications](#14-
 
 The sidebar is a vertical list of items each one of these with the section discussed on general information. For the moment
 just create a red container for place the rest of the sidebar.
+
+### 1.4.1 Sidebar ui work
+
+Now it's important to create a nice looking ui, but at the same time still in the minimalist aspect.
+
+For that first consider that this sidebar should be center in the Y axis (column) and that we will be working in a sidebar
+that support both dark and light mode, so please remote the original color of the container with a better one.
+
+Each item in the list of the sidebar (`SidebarItem` from now) should have a white background and dark text for the dark mode
+version, with rounded corners (Maybe somethings like lg/xl). Consider ofcourse the hover and transition states
+
+### 1.4.2 Sidebar theme switcher
+
+Before continuing adding more features let's handle the dark and light toggle, please and a theme switcher after the last element
+of the list of section in the page, consider that the user should be able to see the change in the theme.
+
+Also adapt the previous components to reflect the change of the theme from dark and light modes, the theme switcher
+to look a lot better please add icons like a sun or moon to give more feedback to the user.
 
 ### 1.5 Content
 
