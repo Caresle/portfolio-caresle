@@ -23,8 +23,8 @@ skills and projects.
 The Current sections are the next:
 
 - Experience
-- Skills
 - Projects
+- Skills
 - About
 
 ### 1.2 Color Palette
@@ -81,3 +81,40 @@ to look a lot better please add icons like a sun or moon to give more feedback t
 ### 1.5 Content
 
 The content of each section, right now just create a purple container for place the rest of the information later on.
+
+### 1.5.1 Removing old colors
+
+Before continue with the new requirements, please change the color used in the background to coincide with the one
+in the sidebar.
+
+> Note: is not an error to use the white color as a background in the light version of the sidebar
+> the idea is that the distintion between both of the sections (Sidebar and AppContent) can not be perciven
+> in the app
+
+### 1.5.2 Experience section
+
+For this section we will be describing first what the idea is and then go more into the
+implementation details. For those see the next points from (1.5.2.1) to (1.5.2.x)
+
+#### 1.5.2.1 Experience section concept
+
+The concept for this part of the portfolio is something between a caroussel and a timeline.
+In the center of the page content will be displayed a card with a title that represents the
+name of the last job that I have, with also the dates of my time there. The user can swipe
+to see the next job in my list, think of this like the tinder or bumble apps, where you have
+a swipe for match.
+
+
+#### 1.5.2.2 Adding more cards
+
+Add at least 3 cards to test the swipe integration.
+
+#### 1.5.2.3 Swipe overflow handling
+
+Fix the overflow issue for the swipe functionality to prevent horizontal scrolling and ensure
+proper boundaries. The implementation should:
+
+- Prevent the page from scrolling horizontally when swiping cards
+- Limit the maximum drag distance to maintain visual consistency
+- Provide resistance feedback when attempting to swipe beyond the first or last card
+- Only allow swipes when there is a previous or next card available

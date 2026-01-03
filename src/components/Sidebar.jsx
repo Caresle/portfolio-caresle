@@ -1,13 +1,10 @@
-import { useState } from 'react'
 import SidebarItem from './SidebarItem'
 
-const sections = ['Experience', 'Skills', 'Projects', 'About']
+const sections = ['Experience', 'Projects', 'Skills', 'About']
 
-function Sidebar({ theme, toggleTheme }) {
-  const [activeSection, setActiveSection] = useState('Experience')
-
+function Sidebar({ theme, toggleTheme, activeSection, setActiveSection }) {
   return (
-    <aside className="w-64 bg-portfolio-black dark:bg-portfolio-black p-6 flex flex-col justify-center">
+    <aside className="w-64 bg-portfolio-white dark:bg-portfolio-black p-6 flex flex-col justify-center">
       <nav className="space-y-4">
         {sections.map((section) => (
           <SidebarItem
