@@ -1,4 +1,5 @@
 import ExperienceSection from './ExperienceSection'
+import ProjectsSection from './ProjectsSection'
 
 function AppContent({ activeSection }) {
   const renderSection = () => {
@@ -6,7 +7,7 @@ function AppContent({ activeSection }) {
       case 'Experience':
         return <ExperienceSection />
       case 'Projects':
-        return <div className="flex items-center justify-center h-full text-portfolio-black dark:text-portfolio-white">Projects Section (Coming Soon)</div>
+        return <ProjectsSection />
       case 'Skills':
         return <div className="flex items-center justify-center h-full text-portfolio-black dark:text-portfolio-white">Skills Section (Coming Soon)</div>
       case 'About':
