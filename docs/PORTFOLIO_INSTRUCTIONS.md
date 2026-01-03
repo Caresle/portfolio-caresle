@@ -118,3 +118,23 @@ proper boundaries. The implementation should:
 - Limit the maximum drag distance to maintain visual consistency
 - Provide resistance feedback when attempting to swipe beyond the first or last card
 - Only allow swipes when there is a previous or next card available
+
+#### 1.5.2.4 Opacity background card when swipe
+
+The idea is when the user move the cards to left/right they can see the next one
+but with the opacity at 50% of their original value.
+
+**Requirements**
+
+- See the next experience card when swipe left/right
+- The card has a transparency of 50%
+
+
+**Acceptance Criteria**
+
+- [ ] A card is showed at the back of the current one being swipe left/right
+- [ ] The card has an opacity of 50% in case this number conflict with accesibility can be changed for a better one
+
+**Dependencies**:
+
+This point to be added required the previous ones from 1.5.x.x to 1.5.2.3.x

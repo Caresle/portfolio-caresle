@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-function ExperienceCard({ experience, onSwipeLeft, onSwipeRight, direction, canSwipeLeft, canSwipeRight }) {
+function ExperienceCard({ experience, onSwipeLeft, onSwipeRight, direction, canSwipeLeft, canSwipeRight, onDragOffsetChange, isBackground = false }) {
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -19,6 +19,12 @@ function ExperienceCard({ experience, onSwipeLeft, onSwipeRight, direction, canS
       return () => clearTimeout(timer)
     }
   }, [direction])
+
+  useEffect(() => {
+    if (onDragOffsetChange && !isBackground) {
+      onDragOffsetChange(dragOffset)
+    }
+  }, [dragOffset, onDragOffsetChange, isBackground])
 
   const onTouchStart = (e) => {
     setTouchEnd(null)
@@ -110,22 +116,22 @@ function ExperienceCard({ experience, onSwipeLeft, onSwipeRight, direction, canS
       className={`
         bg-portfolio-white dark:bg-portfolio-white 
         rounded-2xl p-8 shadow-lg
-        cursor-grab active:cursor-grabbing
         select-none
         transition-transform duration-300
+        ${!isBackground ? 'cursor-grab active:cursor-grabbing' : ''}
         ${animate ? 'scale-95 opacity-50' : 'scale-100 opacity-100'}
       `}
       style={{
-        transform: isDragging ? `translateX(${dragOffset}px) rotate(${dragOffset * 0.05}deg)` : 'none',
+        transform: isDragging && !isBackground ? `translateX(${dragOffset}px) rotate(${dragOffset * 0.05}deg)` : 'none',
         transition: isDragging ? 'none' : 'transform 0.3s ease'
       }}
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-      onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
-      onMouseLeave={onMouseUp}
+      onTouchStart={!isBackground ? onTouchStart : undefined}
+      onTouchMove={!isBackground ? onTouchMove : undefined}
+      onTouchEnd={!isBackground ? onTouchEnd : undefined}
+      onMouseDown={!isBackground ? onMouseDown : undefined}
+      onMouseMove={!isBackground ? onMouseMove : undefined}
+      onMouseUp={!isBackground ? onMouseUp : undefined}
+      onMouseLeave={!isBackground ? onMouseUp : undefined}
     >
       <div className="text-portfolio-black">
         <h2 className="text-3xl font-bold mb-2">{experience.company}</h2>

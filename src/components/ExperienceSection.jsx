@@ -31,6 +31,7 @@ const experiences = [
 function ExperienceSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
 
   const handleSwipe = (dir) => {
     if (dir === 'left' && currentIndex < experiences.length - 1) {
@@ -47,6 +48,9 @@ function ExperienceSection() {
     if (e.key === 'ArrowRight') handleSwipe('right')
   }
 
+  const nextIndex = currentIndex < experiences.length - 1 ? currentIndex + 1 : null
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : null
+
   return (
     <div 
       className="h-full flex items-center justify-center p-8 overflow-hidden"
@@ -54,14 +58,48 @@ function ExperienceSection() {
       onKeyDown={handleKeyDown}
     >
       <div className="relative w-full max-w-2xl">
-        <ExperienceCard 
-          experience={experiences[currentIndex]}
-          onSwipeLeft={() => handleSwipe('left')}
-          onSwipeRight={() => handleSwipe('right')}
-          direction={direction}
-          canSwipeLeft={currentIndex < experiences.length - 1}
-          canSwipeRight={currentIndex > 0}
-        />
+        {/* Background card - Previous (shows when swiping right) */}
+        {prevIndex !== null && dragOffset > 0 && (
+          <div className="absolute inset-0 opacity-50 pointer-events-none">
+            <ExperienceCard 
+              experience={experiences[prevIndex]}
+              onSwipeLeft={() => {}}
+              onSwipeRight={() => {}}
+              direction={0}
+              canSwipeLeft={false}
+              canSwipeRight={false}
+              isBackground={true}
+            />
+          </div>
+        )}
+        
+        {/* Background card - Next (shows when swiping left) */}
+        {nextIndex !== null && dragOffset < 0 && (
+          <div className="absolute inset-0 opacity-50 pointer-events-none">
+            <ExperienceCard 
+              experience={experiences[nextIndex]}
+              onSwipeLeft={() => {}}
+              onSwipeRight={() => {}}
+              direction={0}
+              canSwipeLeft={false}
+              canSwipeRight={false}
+              isBackground={true}
+            />
+          </div>
+        )}
+
+        {/* Current card */}
+        <div className="relative z-10">
+          <ExperienceCard 
+            experience={experiences[currentIndex]}
+            onSwipeLeft={() => handleSwipe('left')}
+            onSwipeRight={() => handleSwipe('right')}
+            direction={direction}
+            canSwipeLeft={currentIndex < experiences.length - 1}
+            canSwipeRight={currentIndex > 0}
+            onDragOffsetChange={setDragOffset}
+          />
+        </div>
         
         {/* Progress indicator */}
         <div className="flex justify-center gap-2 mt-8">
