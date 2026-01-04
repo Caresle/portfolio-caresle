@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "build:projects": "node scripts/build-projects.js",
-    "dev": "npm run build:projects && vite",
-    "build": "npm run build:projects && vite build",
+    "build:experiences": "node scripts/build-experiences.js",
+    "build:data": "npm run build:projects && npm run build:experiences",
+    "dev": "npm run build:data && vite",
+    "build": "npm run build:data && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

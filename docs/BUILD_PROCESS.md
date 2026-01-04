@@ -75,8 +75,9 @@ export const {featureName} = Object.freeze(${JSON.stringify(data.{featureName}, 
 {
   "scripts": {
     "build:{feature}": "node scripts/build-{feature}.js",
-    "dev": "npm run build:{feature} && vite",
-    "build": "npm run build:{feature} && vite build"
+    "build:data": "npm run build:projects && npm run build:experiences",
+    "dev": "npm run build:data && vite",
+    "build": "npm run build:data && vite build"
   }
 }
 ```
@@ -91,12 +92,28 @@ export const {featureName} = Object.freeze(${JSON.stringify(data.{featureName}, 
 - **Export:** `export const projects = Object.freeze([...])`
 - **Commands:** `npm run build:projects`, auto-runs with dev/build
 
-### Experience Section (Planned)
+### Experience Section
 
-- **Source:** `src/data/experiences.json` (to be created)
-- **Script:** `scripts/build-experiences.js` (to be created)
-- **Output:** `src/constants/experiences.js` (to be created)
+- **Source:** `src/data/experiences.json`
+- **Script:** `scripts/build-experiences.js`
+- **Output:** `src/constants/experiences.js`
 - **Export:** `export const experiences = Object.freeze([...])`
+- **Commands:** `npm run build:experiences`, auto-runs with dev/build
+
+**Schema includes:**
+- `id`, `company`, `position`, `startDate`, `endDate`, `description` (core fields)
+- `location` (string) - Work location, displayed as `position - location`
+- `technologies` (array) - Technology stack (for future use)
+
+**Note:** Technology icons are not displayed on experience cards currently (future enhancement).
+
+### Unified Build Command
+
+All data build scripts can be run together:
+- **Command:** `npm run build:data`
+- **Runs:** `build:projects` + `build:experiences`
+- **Auto-runs:** Automatically executes before `dev` and `build` commands
+- **Individual scripts:** Still available as `npm run build:projects` or `npm run build:experiences`
 
 ## Usage in Components
 

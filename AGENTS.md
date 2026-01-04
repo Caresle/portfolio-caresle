@@ -156,10 +156,15 @@ const handleIconError = (e, tech) => {
 **Generated Files:** Constants in `src/constants/` (auto-generated, DO NOT EDIT)
 
 **Workflow:**
-1. Edit `src/data/projects.json` (or other JSON files)
-2. Run `npm run build:projects` (or starts automatically with dev/build)
-3. Script generates `src/constants/projects.js` with `Object.freeze()`
+1. Edit JSON files in `src/data/` (e.g., `projects.json`, `experiences.json`)
+2. Run `npm run build:data` or individual build scripts (auto-runs with dev/build)
+3. Scripts generate frozen constants in `src/constants/` with `Object.freeze()`
 4. Import from constants in components
+
+**Available build commands:**
+- `npm run build:projects` - Build projects constant only
+- `npm run build:experiences` - Build experiences constant only
+- `npm run build:data` - Build all data constants (recommended)
 
 **Build Script Template:**
 ```javascript
