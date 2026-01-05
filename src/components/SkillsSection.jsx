@@ -37,7 +37,7 @@ function SkillsSection() {
                   onError={(e) => handleIconError(e, skill)}
                 />
               </div>
-              <span className="text-sm text-center text-portfolio-black dark:text-portfolio-white opacity-80">
+              <span className="text-sm text-center font-medium text-portfolio-black dark:text-portfolio-white">
                 {skill.name}
               </span>
             </div>
