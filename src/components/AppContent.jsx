@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react'
 import ExperienceSection from './ExperienceSection'
 import ProjectsSection from './ProjectsSection'
+import SkillsSection from './SkillsSection'
+import AboutSection from './AboutSection'
 import ScrollIndicator from './ScrollIndicator'
 import { useScroll } from '../context/ScrollContext'
 import { sections } from '../constants/sections'
@@ -62,9 +64,9 @@ function AppContent({ activeSection, setActiveSection, getNextSection, getPrevio
       case 'Projects':
         return <ProjectsSection />
       case 'Skills':
-        return <div className="flex items-center justify-center h-full text-portfolio-black dark:text-portfolio-white">Skills Section (Coming Soon)</div>
+        return <SkillsSection />
       case 'About':
-        return <div className="flex items-center justify-center h-full text-portfolio-black dark:text-portfolio-white">About Section (Coming Soon)</div>
+        return <AboutSection />
       default:
         return <ExperienceSection />
     }

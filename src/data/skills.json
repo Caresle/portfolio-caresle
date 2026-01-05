@@ -1,0 +1,94 @@
+{
+  "skills": [
+    {
+      "id": 1,
+      "name": "React",
+      "icon": "react"
+    },
+    {
+      "id": 2,
+      "name": "Node.js",
+      "icon": "nodejs"
+    },
+    {
+      "id": 3,
+      "name": "TypeScript",
+      "icon": "typescript-icon"
+    },
+    {
+      "id": 4,
+      "name": "MongoDB",
+      "icon": "mongodb"
+    },
+    {
+      "id": 5,
+      "name": "PostgreSQL",
+      "icon": "postgresql"
+    },
+    {
+      "id": 6,
+      "name": "Next.js",
+      "icon": "nextjs"
+    },
+    {
+      "id": 7,
+      "name": "Tailwind CSS",
+      "icon": "tailwindcss"
+    },
+    {
+      "id": 8,
+      "name": "Docker",
+      "icon": "docker"
+    },
+    {
+      "id": 9,
+      "name": "Git",
+      "icon": "git"
+    },
+    {
+      "id": 10,
+      "name": "Redis",
+      "icon": "redis"
+    },
+    {
+      "id": 11,
+      "name": "JavaScript",
+      "icon": "javascript"
+    },
+    {
+      "id": 12,
+      "name": "Vue.js",
+      "icon": "vue"
+    },
+    {
+      "id": 13,
+      "name": "Laravel",
+      "icon": "laravel"
+    },
+    {
+      "id": 14,
+      "name": "Jest",
+      "icon": "jest"
+    },
+    {
+      "id": 15,
+      "name": "GitHub",
+      "icon": "github"
+    },
+    {
+      "id": 16,
+      "name": "MariaDB",
+      "icon": "mariadb"
+    },
+    {
+      "id": 17,
+      "name": "Supabase",
+      "icon": "supabase"
+    },
+    {
+      "id": 18,
+      "name": "SQL Server",
+      "icon": "microsoft-sql-server-logo-svgrepo-com"
+    }
+  ]
+}

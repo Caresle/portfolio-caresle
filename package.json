@@ -6,7 +6,9 @@
   "scripts": {
     "build:projects": "node scripts/build-projects.js",
     "build:experiences": "node scripts/build-experiences.js",
-    "build:data": "npm run build:projects && npm run build:experiences",
+    "build:skills": "node scripts/build-skills.js",
+    "build:about": "node scripts/build-about.js",
+    "build:data": "npm run build:projects && npm run build:experiences && npm run build:skills && npm run build:about",
     "dev": "npm run build:data && vite",
     "build": "npm run build:data && vite build",
     "preview": "vite preview"
