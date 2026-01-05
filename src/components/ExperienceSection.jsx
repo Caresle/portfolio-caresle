@@ -31,7 +31,7 @@ function ExperienceSection() {
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      <div className="relative w-full max-w-2xl">
+      <div className="relative w-full max-w-2xl" data-scroll-area="card">
         {/* Background card - Previous (shows when swiping right) */}
         {prevIndex !== null && dragOffset > 0 && (
           <div className="absolute inset-0 opacity-50 pointer-events-none">

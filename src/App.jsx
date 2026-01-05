@@ -1,10 +1,25 @@
 import { useState, useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import AppContent from './components/AppContent'
+import { ScrollProvider } from './context/ScrollContext'
+import { sections } from './constants/sections'
 
 function App() {
   const [theme, setTheme] = useState('dark')
   const [activeSection, setActiveSection] = useState('Experience')
+
+  // Section navigation helpers
+  const getSectionIndex = (section) => sections.indexOf(section)
+
+  const getNextSection = (currentSection) => {
+    const currentIndex = getSectionIndex(currentSection)
+    return currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null
+  }
+
+  const getPreviousSection = (currentSection) => {
+    const currentIndex = getSectionIndex(currentSection)
+    return currentIndex > 0 ? sections[currentIndex - 1] : null
+  }
 
   useEffect(() => {
     // Check if user has a theme preference
@@ -21,15 +36,22 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen bg-portfolio-white dark:bg-portfolio-black transition-colors duration-300">
-      <Sidebar 
-        theme={theme} 
-        toggleTheme={toggleTheme}
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-      />
-      <AppContent activeSection={activeSection} />
-    </div>
+    <ScrollProvider>
+      <div className="flex h-screen bg-portfolio-white dark:bg-portfolio-black transition-colors duration-300">
+        <Sidebar 
+          theme={theme} 
+          toggleTheme={toggleTheme}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+        />
+        <AppContent 
+          activeSection={activeSection} 
+          setActiveSection={setActiveSection}
+          getNextSection={getNextSection}
+          getPreviousSection={getPreviousSection}
+        />
+      </div>
+    </ScrollProvider>
   )
 }
 

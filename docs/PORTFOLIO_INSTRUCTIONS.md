@@ -672,3 +672,428 @@ export default AppContent
 
 **Dependencies:**
 This section requires 1.5.2 (Experience section) to be completed first as it follows the same interaction patterns and component structure.
+
+---
+
+### 1.6 Scroll-Based Section Navigation
+
+**Purpose:** Enable intuitive vertical scroll navigation that transitions between sections when users scroll in empty areas, providing a seamless browsing experience with visual feedback.
+
+#### 1.6.1 Scroll navigation concept
+
+**Overview:**
+Users can navigate between sections (Experience → Projects → Skills → About) by scrolling up or down in empty areas outside of interactive card components. This creates a natural flow similar to single-page presentation websites while maintaining the swipe card interactions within sections.
+
+**Key Features:**
+- Vertical scroll detection in empty areas only
+- Smooth directional transitions (slide + fade animations)
+- Visual scroll indicators (pulsing arrows)
+- 800ms cooldown to prevent accidental rapid switching
+- Full mobile/tablet support
+- No conflicts with horizontal card swipes
+
+**Section Order:**
+```
+Experience (first)
+    ↓ scroll down
+Projects
+    ↓ scroll down
+Skills
+    ↓ scroll down
+About (last)
+```
+
+**User Experience:**
+- Scroll down in empty area → Navigate to next section
+- Scroll up in empty area → Navigate to previous section
+- At first section (Experience) → Scroll up does nothing
+- At last section (About) → Scroll down does nothing
+- Modal open → Scroll navigation disabled
+- Over card areas → Scroll ignored (prevents conflicts)
+
+#### 1.6.2 Technical architecture
+
+**Components:**
+
+1. **ScrollContext** (`src/context/ScrollContext.jsx`)
+   - Shared context for modal state management
+   - Provides `isModalOpen` and `setIsModalOpen`
+   - Used to disable scroll navigation when modals are open
+   - Consumed by AppContent and ProjectsSection
+
+2. **ScrollIndicator** (`src/components/ScrollIndicator.jsx`)
+   - Visual indicators showing scroll availability
+   - Props: `direction` ('up' | 'down'), `visible` (boolean)
+   - Displays pulsing chevron arrows
+   - Position: Fixed at top (up arrow) or bottom (down arrow)
+   - Auto-hides at section boundaries
+
+3. **Section Constants** (`src/constants/sections.js`)
+   - Centralized section order definition
+   - Frozen array: `['Experience', 'Projects', 'Skills', 'About']`
+   - Single source of truth for section navigation
+   - Used by Sidebar, App, and AppContent
+
+**State Management:**
+- ScrollProvider wraps entire app in `App.jsx`
+- Modal state shared via context (prevents scroll when modal open)
+- Transition direction tracked in `AppContent` for animations
+- Cooldown managed with useRef (avoids re-renders)
+
+**Data Flow:**
+```
+User scrolls in empty area
+    ↓
+AppContent.handleWheel detects scroll
+    ↓
+Check: Modal open? → Block
+Check: Cooldown active? → Block
+Check: Over card area? → Block
+    ↓
+Determine direction (deltaY > 0 = down, < 0 = up)
+    ↓
+Get next/previous section from helpers
+    ↓
+Set transition direction state
+    ↓
+Call setActiveSection (triggers re-render)
+    ↓
+CSS animation plays (slideInDown/slideInUp)
+    ↓
+Activate 800ms cooldown
+```
+
+#### 1.6.3 Scroll detection implementation
+
+**Event Listener:** `onWheel` on main content container
+
+**Detection Logic:**
+```javascript
+const handleWheel = (e) => {
+  // 1. Check if modal is open
+  if (isModalOpen) return
+
+  // 2. Check cooldown (800ms)
+  const now = Date.now()
+  if (now - cooldownRef.current < 800) return
+
+  // 3. Check if scrolling over card area
+  if (e.target.closest('[data-scroll-area="card"]')) return
+
+  // 4. Determine direction
+  const scrollingDown = e.deltaY > 0  // Positive = down
+  const scrollingUp = e.deltaY < 0    // Negative = up
+
+  // 5. Navigate to next/previous section
+  if (scrollingDown) {
+    const nextSection = getNextSection(activeSection)
+    if (nextSection) {
+      setTransitionDirection('down')
+      setActiveSection(nextSection)
+      cooldownRef.current = now
+    }
+  } else if (scrollingUp) {
+    const prevSection = getPreviousSection(activeSection)
+    if (prevSection) {
+      setTransitionDirection('up')
+      setActiveSection(prevSection)
+      cooldownRef.current = now
+    }
+  }
+}
+```
+
+**Cooldown Mechanism:**
+- Duration: 800ms between section transitions
+- Implementation: useRef for timestamp (no re-renders)
+- Prevents accidental rapid switching
+- Allows smooth, intentional navigation
+
+**Card Area Detection:**
+- Card containers marked with `data-scroll-area="card"`
+- Locations: ExperienceSection and ProjectsSection card wrappers
+- Scroll handler checks: `e.target.closest('[data-scroll-area="card"]')`
+- If match found → Ignore scroll event
+- Prevents conflicts with horizontal card swipes
+
+#### 1.6.4 Visual indicators
+
+**Scroll Indicators:**
+- Component: `ScrollIndicator.jsx`
+- Display: Pulsing chevron arrows
+- Animation: `pulse-subtle` (2s infinite, scale 1 → 1.1 → 1)
+- Opacity: 0.5 base, 0.7 at peak
+
+**Up Arrow (Chevron Up):**
+- Position: `fixed top-12 left-1/2` (centered)
+- Visible: When NOT on first section (Experience)
+- Indicates: Can scroll up to previous section
+
+**Down Arrow (Chevron Down):**
+- Position: `fixed bottom-12 left-1/2` (centered)
+- Visible: When NOT on last section (About)
+- Indicates: Can scroll down to next section
+
+**Styling:**
+```javascript
+{
+  size: '32px × 32px',
+  colors: 'text-portfolio-black dark:text-portfolio-white',
+  opacity: 0.5,
+  animation: 'pulse-subtle 2s infinite',
+  zIndex: 20,
+  pointerEvents: 'none'
+}
+```
+
+**Visibility Logic:**
+```javascript
+const showDownIndicator = activeSection !== sections[sections.length - 1]
+const showUpIndicator = activeSection !== sections[0]
+```
+
+#### 1.6.5 Transition animations
+
+**Animation Types:**
+
+1. **Slide Down** (scrolling to next section)
+   ```css
+   @keyframes slideInDown {
+     from {
+       opacity: 0;
+       transform: translateY(-20px);
+     }
+     to {
+       opacity: 1;
+       transform: translateY(0);
+     }
+   }
+   ```
+   - Duration: 400ms
+   - Easing: ease-out
+   - Effect: Slides in from top with fade
+
+2. **Slide Up** (scrolling to previous section)
+   ```css
+   @keyframes slideInUp {
+     from {
+       opacity: 0;
+       transform: translateY(20px);
+     }
+     to {
+       opacity: 1;
+       transform: translateY(0);
+     }
+   }
+   ```
+   - Duration: 400ms
+   - Easing: ease-out
+   - Effect: Slides in from bottom with fade
+
+**Implementation:**
+- Transition direction tracked in AppContent state
+- Key attribute on section wrapper triggers re-mount
+- Animation class applied based on direction
+- CSS handles the actual animation
+
+**Animation Flow:**
+1. User scrolls → Direction detected
+2. setTransitionDirection called ('up' or 'down')
+3. setActiveSection updates current section
+4. React re-renders with new key
+5. CSS animation class applied
+6. Section slides and fades in (400ms)
+
+#### 1.6.6 Mobile and tablet support
+
+**Touch Support:**
+- Primary: `onWheel` event (works on most modern mobile browsers)
+- Tested on: iOS Safari, Chrome Mobile, Android browsers
+- Two-finger scroll and swipe gestures supported
+
+**Responsive Behavior:**
+- Indicators: Visible and properly positioned on all screen sizes
+- Touch areas: No interference with card swipe gestures
+- Animations: Smooth on mobile devices (hardware accelerated)
+
+**Gesture Priority:**
+- Horizontal swipes on cards → Card navigation (higher priority)
+- Vertical scroll in empty areas → Section navigation
+- No conflicts due to `data-scroll-area="card"` detection
+
+**Testing Requirements:**
+- [ ] Mouse wheel (desktop)
+- [ ] Trackpad scroll (MacBook)
+- [ ] Two-finger scroll (mobile/tablet)
+- [ ] Touch swipe (mobile)
+- [ ] Landscape and portrait orientations
+
+#### 1.6.7 Edge cases and error handling
+
+**Boundary Conditions:**
+1. **At First Section (Experience)**
+   - Scroll up → No action
+   - Up indicator → Hidden
+   - Down indicator → Visible
+
+2. **At Last Section (About)**
+   - Scroll down → No action
+   - Down indicator → Hidden
+   - Up indicator → Visible
+
+3. **Modal Open**
+   - All scroll navigation → Disabled
+   - Indicators → Still visible (informational)
+   - Context check prevents navigation
+
+4. **Rapid Scrolling**
+   - Cooldown → Prevents multiple transitions
+   - First scroll → Triggers navigation
+   - Additional scrolls within 800ms → Ignored
+
+5. **Over Card Areas**
+   - Scroll events → Ignored
+   - Allows card interactions → Unaffected
+   - Detection via `data-scroll-area` attribute
+
+**Error Prevention:**
+- Null checks on next/previous section
+- Context throws error if used outside provider
+- Graceful degradation if animations unsupported
+
+#### 1.6.8 Implementation checklist
+
+**Setup:**
+- [x] Create ScrollContext for modal state sharing
+- [x] Create sections constants file
+- [x] Update Sidebar to use sections constants
+- [x] Wrap app with ScrollProvider in App.jsx
+
+**Navigation Logic:**
+- [x] Add section navigation helpers (getNextSection, getPreviousSection)
+- [x] Add scroll event handler to AppContent
+- [x] Implement cooldown mechanism (800ms)
+- [x] Add card area detection logic
+
+**Visual Components:**
+- [x] Create ScrollIndicator component
+- [x] Add pulse animation CSS
+- [x] Integrate indicators in AppContent
+- [x] Calculate indicator visibility
+
+**Animations:**
+- [x] Add slideInDown CSS keyframe
+- [x] Add slideInUp CSS keyframe
+- [x] Track transition direction in state
+- [x] Apply animation classes on section change
+
+**Integration:**
+- [x] Add data-scroll-area to ExperienceSection card container
+- [x] Add data-scroll-area to ProjectsSection card container
+- [x] Update ProjectsSection to use ScrollContext
+- [x] Pass navigation props to AppContent
+
+**Testing:**
+- [ ] Desktop scroll navigation (mouse wheel)
+- [ ] Trackpad scroll (MacBook)
+- [ ] Mobile/tablet touch scroll
+- [ ] Card swipes still work (no conflicts)
+- [ ] Modal disables scroll navigation
+- [ ] Indicators show/hide correctly
+- [ ] Transitions are smooth and directional
+- [ ] Cooldown prevents rapid switching
+- [ ] Boundary behavior correct (first/last sections)
+
+#### 1.6.9 Technical specifications
+
+**Constants:**
+```javascript
+{
+  cooldownDuration: 800,        // ms between transitions
+  animationDuration: 400,       // ms for slide transitions
+  pulseAnimationDuration: 2000, // ms for indicator pulse
+  indicatorOpacity: 0.5,        // base opacity
+  indicatorSize: 32,            // px (width and height)
+  slideDistance: 20             // px for slide animation
+}
+```
+
+**File Locations:**
+- Context: `src/context/ScrollContext.jsx`
+- Constants: `src/constants/sections.js`
+- Indicator: `src/components/ScrollIndicator.jsx`
+- Animations: `src/index.css`
+- Integration: `src/App.jsx`, `src/components/AppContent.jsx`
+
+**Dependencies:**
+Requires sections 1.5.2 (Experience) and 1.5.3 (Projects) to be completed as they provide the card interaction patterns that must be preserved.
+
+---
+
+#### 1.6.10 Important implementation considerations
+
+**Content Centering:**
+All sections must be vertically and horizontally centered within the AppContent area. This is achieved through:
+
+1. **AppContent wrapper must have height:**
+   ```jsx
+   <div key={activeSection} className={`h-full ${getAnimationClass()}`}>
+     {renderSection()}
+   </div>
+   ```
+   - The wrapper div needs `h-full` class to take full height
+   - Without it, content appears at the top of the page
+
+2. **Each section component must use flex centering:**
+   ```jsx
+   <div className="h-full flex items-center justify-center p-8 overflow-hidden">
+     {/* Section content */}
+   </div>
+   ```
+   - `h-full` - Takes full available height
+   - `flex items-center justify-center` - Centers content vertically and horizontally
+   - Applied to: ExperienceSection, ProjectsSection, Skills, About
+
+**Scroll Indicator Positioning:**
+Indicators must be positioned relative to the AppContent component, not the entire viewport:
+
+1. **AppContent must be position relative:**
+   ```jsx
+   <main className="flex-1 bg-portfolio-white dark:bg-portfolio-black transition-colors duration-300 relative">
+   ```
+   - Added `relative` class to create positioning context
+
+2. **ScrollIndicator must use absolute positioning:**
+   ```jsx
+   className="absolute bottom-12 left-1/2 -translate-x-1/2"
+   ```
+   - Changed from `fixed` to `absolute`
+   - Positions relative to AppContent, not viewport
+   - Ensures indicators stay within content area
+
+3. **ScrollIndicators placed inside main element:**
+   ```jsx
+   <main className="...relative" onWheel={handleWheel}>
+     <ScrollIndicator direction="up" visible={showUpIndicator} />
+     <ScrollIndicator direction="down" visible={showDownIndicator} />
+     <div className="h-full">...</div>
+   </main>
+   ```
+   - Indicators are children of the `<main>` element
+   - Not siblings of `<main>` (previous incorrect implementation)
+   - Allows proper relative positioning
+
+**Why These Fixes Matter:**
+- **Content Centering:** Ensures consistent visual hierarchy across all sections
+- **Indicator Positioning:** Keeps indicators within the content bounds (respects sidebar)
+- **User Experience:** Creates balanced, centered layouts that feel professional
+- **Responsiveness:** Works correctly at all screen sizes and with different sidebar widths
+
+**Testing Checklist After Fixes:**
+- [ ] All sections (Experience, Projects, Skills, About) are vertically centered
+- [ ] Scroll indicators appear at bottom-center of content area (not entire screen)
+- [ ] Indicators don't overlap with sidebar
+- [ ] Content doesn't touch top of viewport
+- [ ] Animations still work smoothly with centered content
+- [ ] Layout is responsive on different screen sizes
+

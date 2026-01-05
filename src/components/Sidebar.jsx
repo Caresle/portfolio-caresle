@@ -1,6 +1,5 @@
 import SidebarItem from './SidebarItem'
-
-const sections = ['Experience', 'Projects', 'Skills', 'About']
+import { sections } from '../constants/sections'
 
 function Sidebar({ theme, toggleTheme, activeSection, setActiveSection }) {
   return (

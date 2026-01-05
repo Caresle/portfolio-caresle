@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { projects } from '../constants/projects'
 import ProjectCard from './ProjectCard'
 import ProjectDetailModal from './ProjectDetailModal'
+import { useScroll } from '../context/ScrollContext'
 
 function ProjectsSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const [dragOffset, setDragOffset] = useState(0)
   const [selectedProject, setSelectedProject] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { isModalOpen, setIsModalOpen } = useScroll()
 
   const handleSwipe = (dir) => {
     if (dir === 'left' && currentIndex < projects.length - 1) {
@@ -51,7 +52,7 @@ function ProjectsSection() {
         tabIndex={0}
         onKeyDown={handleKeyDown}
       >
-        <div className="relative w-full max-w-2xl">
+        <div className="relative w-full max-w-2xl" data-scroll-area="card">
           {/* Background card - Previous (shows when swiping right) */}
           {prevIndex !== null && dragOffset > 0 && (
             <div className="absolute inset-0 opacity-50 pointer-events-none">
