@@ -1,0 +1,29 @@
+{
+  "about": {
+    "name": "Carlos Estrada",
+    "title": "Full Stack Developer",
+    "bio": "Passionate full-stack developer with expertise in building scalable web applications using modern JavaScript frameworks. I love creating intuitive user experiences and solving complex technical challenges. When I'm not coding, I enjoy contributing to open source projects and mentoring aspiring developers.",
+    "profileImage": null,
+    "contact": {
+      "email": "carlos@example.com",
+      "location": "San Francisco, CA",
+      "linkedin": "https://linkedin.com/in/carlosestrada",
+      "github": "https://github.com/caresle"
+    },
+    "education": [
+      {
+        "degree": "Bachelor of Science in Computer Science",
+        "school": "University of California",
+        "year": "2016 - 2020"
+      }
+    ],
+    "interests": [
+      "Open Source",
+      "Web Performance",
+      "UI/UX Design",
+      "Mentoring",
+      "Technical Writing"
+    ],
+    "resumeUrl": "/resume.pdf"
+  }
+}

@@ -1,19 +1,29 @@
 {
   "name": "portfolio-caresle",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "build:projects": "node scripts/build-projects.js",
+    "build:experiences": "node scripts/build-experiences.js",
+    "build:skills": "node scripts/build-skills.js",
+    "build:about": "node scripts/build-about.js",
+    "build:data": "npm run build:projects && npm run build:experiences && npm run build:skills && npm run build:about",
+    "dev": "npm run build:data && vite",
+    "build": "npm run build:data && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.6.3",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "vite": "^5.0.8"
   }
 }
