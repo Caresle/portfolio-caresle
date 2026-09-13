@@ -1,7 +1,7 @@
 // Centralized section order definition
 export const sections = Object.freeze([
   'Experience',
-  'Projects',
+  // 'Projects',
   'Skills',
   'About'
 ])

@@ -38,14 +38,14 @@ function App() {
   return (
     <ScrollProvider>
       <div className="flex h-screen bg-portfolio-white dark:bg-portfolio-black transition-colors duration-300">
-        <Sidebar 
-          theme={theme} 
+        <Sidebar
+          theme={theme}
           toggleTheme={toggleTheme}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
         />
-        <AppContent 
-          activeSection={activeSection} 
+        <AppContent
+          activeSection={activeSection}
           setActiveSection={setActiveSection}
           getNextSection={getNextSection}
           getPreviousSection={getPreviousSection}

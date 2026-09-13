@@ -12,6 +12,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Agent skills (vendored from remote sources, restore from skills-lock.json)
+.claude/skills/
+.agents/skills/
 
 # environment variables
 .env
